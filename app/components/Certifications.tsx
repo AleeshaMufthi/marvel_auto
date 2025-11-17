@@ -4,32 +4,32 @@ import { Wrench, Battery, Droplets, Car, Gauge, Disc } from "lucide-react";
 
 const certificates = [
   {
-    icon: <Car className="w-12 h-12 mx-auto text-black" />,
+    icon: "/service1.png",
     title: "ASE Certified Technicians Canada",
     desc: "Our certified mechanics are trained and tested to deliver accurate diagnostics, reliable repairs, and expert maintenance for all types of vehicles.",
   },
   {
-    icon: <Gauge className="w-12 h-12 mx-auto text-black" />,
+    icon: "/service1.png",
     title: "Red Seal Certified Interprovincial Standard, Canada",
     desc: "Our technicians are Red Seal Certified, which means they have met national standards through extensive training, testing, and practical experience.",
   },
   {
-    icon: <Battery className="w-12 h-12 mx-auto text-black" />,
+    icon: "/service1.png",
     title: "ASE Certified Technicians Canada",
     desc: "Our certified mechanics are trained and tested to deliver accurate diagnostics, reliable repairs, and expert maintenance for all types of vehicles.",
   },
   {
-    icon: <Droplets className="w-12 h-12 mx-auto text-black" />,
+    icon: "/service1.png",
     title: "Red Seal Certified Interprovincial Standard, Canada",
     desc: "High-quality oil and filter replacement to keep your car running efficiently and extend engine life.",
   },
   {
-    icon: <Wrench className="w-12 h-12 mx-auto text-black" />,
+    icon: "/service1.png",
     title: "ASE Certified Technicians Canada",
     desc: "Our certified mechanics are trained and tested to deliver accurate diagnostics, reliable repairs, and expert maintenance for all types of vehicles.",
   },
   {
-    icon: <Disc className="w-12 h-12 mx-auto text-black" />,
+    icon: "/service1.png",
     title: "Red Seal Certified Interprovincial Standard, Canada",
     desc: "Professional tire installation, balancing, and wheel alignment for maximum grip and durability.",
   },
@@ -53,17 +53,24 @@ const Certifications: React.FC = () => {
       </p>
 
       {/* ===== Cards Section ===== */}
-      <div className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
+      <div className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-20 max-w-7xl mx-auto">
         {visibleCards.map((certificate, idx) => (
           <div
             key={idx}
             className="bg-white hover:bg-gray-200 rounded-xl shadow-md transition-all duration-300 
-                       w-full sm:w-[340px] md:w-[360px] lg:w-[400px] 
+                       w-[280px] sm:w-[340px] md:w-[360px] lg:w-[360px] 
                        h-auto sm:h-[480px] md:h-[520px] lg:h-[550px] 
                        p-6 sm:p-8 flex flex-col items-center text-center"
           >
-            {/* Icon Section */}
-            <div className="flex-1 flex items-center justify-center mb-4">{certificate.icon}</div>
+
+            <div className="flex-1 flex items-center justify-center mb-4">
+              <img
+                src={certificate.icon}
+                alt={certificate.title}
+                className="w-20 h-20 object-contain"
+              />
+            </div>
+
 
             {/* Title Section */}
             <div className="flex-1 flex items-center justify-center mb-2">
@@ -74,7 +81,7 @@ const Certifications: React.FC = () => {
 
             {/* Description Section */}
             <div className="flex-[1.5] flex items-start justify-center">
-              <p className="text-sm sm:text-base md:text-lg text-black font-normal leading-relaxed text-center">
+              <p className="text-md sm:text-base md:text-xl text-black font-normal leading-relaxed text-center">
                 {certificate.desc}
               </p>
             </div>

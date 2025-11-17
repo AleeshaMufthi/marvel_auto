@@ -14,16 +14,57 @@ export default function Navbar() {
     { name: "Contact", href: "/contact" },
   ];
 
+  const [form, setForm] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  subject: "",
+  message: "",
+});
+
+
   const [showForm, setShowForm] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+
+const handleSubmit = async (e: any) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("name", form.name);
+  formData.append("email", form.email);
+  formData.append("phone", form.phone);
+  formData.append("subject", form.subject);
+  formData.append("message", form.message);
+
+  if (file) {
+    formData.append("file", file);
+  }
+
+  const res = await fetch("/api/book-now", {
+    method: "POST",
+    body: formData, // ⬅ NO HEADERS FOR FORMDATA
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("Enquiry sent successfully!");
+    setShowForm(false);
+    setFile(null);
+    setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+  } else {
+    alert("Failed to send enquiry");
+  }
+};
+
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
       <div className="max-w-8xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-3 ml-4 md:ml-28">
-          <Image src="/marvel_logo.jpg" alt="Logo" width={80} height={80} />
+          <Image src="/marvel_logo.jpg" alt="Logo" width={100} height={100} />
         </div>
 
         {/* Desktop Nav */}
@@ -42,7 +83,7 @@ export default function Navbar() {
         {/* Desktop Right Buttons */}
         <div className="hidden lg:flex items-center space-x-8 mr-8 md:mr-28">
           <Link
-            href="/location"
+            href="https://www.google.com/maps/place/Marvel+Auto+Repair/@42.9883723,-81.1737981,17z/data=!3m1!4b1!4m6!3m5!1s0x882ef3969fee8b81:0xa73d129e96d1c3f5!8m2!3d42.9883723!4d-81.1737981!16s%2Fg%2F11l2d881mg?entry=ttu&g_ep=EgoyMDI1MTExMi4wIKXMDSoASAFQAw%3D%3D"
             className="text-black hover:text-yellow-400 flex items-center space-x-1"
           >
             <MapPin size={28} />
@@ -93,7 +134,7 @@ export default function Navbar() {
             ))}
 
             <div className="flex items-center justify-start gap-4 pt-4 border-t border-gray-200">
-              <Link href="/location" onClick={() => setMenuOpen(false)}>
+              <Link href="https://www.google.com/maps/place/Marvel+Auto+Repair/@42.9883723,-81.1737981,17z/data=!3m1!4b1!4m6!3m5!1s0x882ef3969fee8b81:0xa73d129e96d1c3f5!8m2!3d42.9883723!4d-81.1737981!16s%2Fg%2F11l2d881mg?entry=ttu&g_ep=EgoyMDI1MTExMi4wIKXMDSoASAFQAw%3D%3D" onClick={() => setMenuOpen(false)}>
                 <MapPin size={24} className="text-black hover:text-yellow-400" />
               </Link>
 
@@ -137,7 +178,9 @@ export default function Navbar() {
             <section className="py-10 px-6 md:px-12">
               <h2 className="text-2xl font-semibold mb-8">Enquiry</h2>
 
-              <form className="space-y-8">
+              <form
+              onSubmit={handleSubmit}
+               className="space-y-8">
                 {/* Name */}
                 <div>
                   <label className="block text-sm mb-2 text-gray-300">
@@ -145,6 +188,7 @@ export default function Navbar() {
                   </label>
                   <input
                     type="text"
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className="w-full border border-gray-500 bg-transparent rounded-md px-6 py-2 focus:outline-none focus:border-yellow-400"
                   />
                 </div>
@@ -157,6 +201,7 @@ export default function Navbar() {
                     </label>
                     <input
                       type="email"
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
                       className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
                     />
                   </div>
@@ -166,6 +211,7 @@ export default function Navbar() {
                     </label>
                     <input
                       type="text"
+                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
                     />
                   </div>
@@ -179,6 +225,7 @@ export default function Navbar() {
                     </label>
                     <input
                       type="text"
+                      onChange={(e) => setForm({ ...form, subject: e.target.value })}
                       className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
                     />
                   </div>
@@ -188,6 +235,7 @@ export default function Navbar() {
                     </label>
                     <textarea
                       rows={3}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
                     ></textarea>
                   </div>

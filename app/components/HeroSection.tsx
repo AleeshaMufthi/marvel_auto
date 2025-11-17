@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const offers = [
@@ -10,129 +11,212 @@ const offers = [
   { id: 4, image: "/offer.jpg" },
 ];
 
+const logos = [
+  "mercedes(1).png",
+  "audi-removebg-preview.png",
+  "bmw-logo.png",
+  "rolls-royce-logo-removebg-preview.png",
+  "jaguar-removebg-preview.png",
+  "lexus-removebg-preview.png",
+  "porsche-Logo.png",
+];
+
 export default function HeroSection() {
   const [active, setActive] = useState(0);
   const [visible, setVisible] = useState(true);
 
+  const [index, setIndex] = useState(0);
+
+  const next = () => setIndex((index + 1) % logos.length);
+  const prev = () => setIndex((index - 1 + logos.length) % logos.length);
+
   return (
     <>
-      <section className="relative bg-black text-white overflow-hidden font-poppins pt-[100px] min-h-screen flex flex-col justify-center">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-10">
-          <Image
-            src="/banner_img.jpg"
-            alt="Car background"
-            fill
-            className="object-cover opacity-90"
-            priority
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-60" />
+      {/* ======================= TEXT SECTION ======================= */}
+      <section className="bg-black pt-[140px] md:pt-[220px] pb-1 md:pb-2">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-loose tracking-wider">
+            RELIABLE AUTO REPAIR
+          </h1>
+
+          <h2 className="text-gray-300 mt-0 md:mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal leading-loose tracking-wider">
+            YOU CAN{" "}
+            <span className="text-yellow-400 font-medium">TRUST</span>
+          </h2>
+
+          <p className="text-gray-200 mt-4 md:mt-6 max-w-xl text-base md:text-lg leading-relaxed">
+            We keep your car running smoothly with expert service, honest
+            pricing, and fast turnaround.
+          </p>
         </div>
+      </section>
 
-        {/* Content Section */}
-        <div
-          className="
-            relative z-20 
-            max-w-8xl mx-auto px-6 sm:px-10 md:px-16 lg:px-32
-            flex flex-col lg:flex-row 
-            items-center lg:items-start 
-            justify-between
-            gap-10 lg:gap-20
-          "
-        >
-          {/* ==== Text Section ==== */}
-          <div className="text-center lg:text-left lg:w-1/2 mt-[-40px]">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-relaxed">
-              RELIABLE AUTO REPAIR
-              <br />
-              <span className="text-gray-300 font-medium text-2xl sm:text-3xl md:text-4xl">
-                YOU CAN{" "}
-                <span className="text-yellow-400 font-semibold">TRUST</span>
-              </span>
-            </h1>
-
-            <p className="text-gray-300 mt-5 max-w-xl mx-auto lg:mx-0 text-base sm:text-lg">
-              We keep your car running smoothly with expert service, honest
-              pricing, and fast turnaround.
-            </p>
+      {/* ======================= HERO IMAGE + OFFER CARD ======================= */}
+      <section className="relative bg-black pb-16 md:pb-20">
+          
+          {/* Hero Image - Full width */}
+          <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
+            <Image
+              src="/banner_img.jpg"
+              alt="Hero Car"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
 
-          {/* ==== Offer Card ==== */}
+          {/* Offer Card - Absolutely positioned on the right side */}
           <AnimatePresence>
             {visible && (
               <motion.div
                 key={offers[active].id}
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: 60 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 100 }}
+                exit={{ opacity: 0, x: 80 }}
                 transition={{ duration: 0.3 }}
-                className="relative w-full sm:w-[340px] md:w-[380px] lg:w-[360px] mt-10 lg:mt-0"
+                className="
+                  absolute
+                  top-4 sm:-top-40 md:-top-48 lg:-top-56
+                  right-4 sm:right-8 md:right-12 lg:right-20
+                  w-[140px] sm:w-[260px] md:w-[300px] lg:w-[340px]
+                  z-30
+                "
               >
-                <div className="relative rounded-3xl overflow-hidden h-[400px] sm:h-[440px] md:h-[480px] shadow-2xl border border-yellow-400">
+                <div className="relative h-[180px] sm:h-[380px] md:h-[420px] lg:h-[480px] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
                   <Image
                     src={offers[active].image}
                     alt="Offer"
                     fill
                     className="object-cover"
                   />
+
                   <button
                     onClick={() => setVisible(false)}
-                    className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white rounded-full w-7 h-7 flex items-center justify-center"
+                    className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg font-light transition-colors"
+                    aria-label="Close offer"
                   >
                     ✕
                   </button>
                 </div>
 
-                {/* Dots */}
+                {/* Dots Navigation */}
                 <div className="flex justify-center mt-4 space-x-2">
                   {offers.map((_, i) => (
                     <motion.button
                       key={i}
                       onClick={() => setActive(i)}
                       animate={{
-                        width: i === active ? 24 : 8,
-                        backgroundColor: i === active ? "#FACC15" : "#9CA3AF",
+                        width: i === active ? 32 : 8,
+                        backgroundColor: i === active ? "#FACC15" : "#6B7280",
                       }}
                       transition={{ duration: 0.3 }}
-                      className="h-2 rounded-full"
+                      className="h-2 rounded-full cursor-pointer"
+                      aria-label={`Go to offer ${i + 1}`}
                     />
                   ))}
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
       </section>
 
-      {/* ==== Brand Logos Section ==== */}
-      <section
-        className="
-          py-20 bg-black opacity-90 z-20 
-          flex flex-wrap justify-center items-center 
-          gap-10 sm:gap-14 md:gap-20 lg:gap-28 
-          px-6
-        "
+      {/* ======================= BRAND LOGOS ======================= */}
+      <section className="py-12 md:py-16 lg:py-20 bg-black">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8">
+
+        {/* ================= MOBILE CAROUSEL ================= */}
+{/* <div className="relative flex justify-center items-center md:hidden">
+
+  <button
+    onClick={prev}
+    className="absolute left-2 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-lg z-10"
+  >
+    <ChevronLeft size={20} />
+  </button>
+  <div className="w-full flex justify-center">
+    <div className="w-40 h-40 flex items-center justify-center">
+      <Image
+        src={`/${logos[index]}`}
+        alt="Brand logo"
+        width={160}
+        height={160}
+        className="grayscale hover:grayscale-0 transition-all duration-300 object-contain max-w-full max-h-full"
+      />
+    </div>
+  </div>
+
+  <button
+    onClick={next}
+    className="absolute right-2 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-lg z-10"
+  >
+    <ChevronRight size={20} />
+  </button>
+</div> */}
+
+{/* ================= MOBILE AUTO-LOOP LOGO MARQUEE ================= */}
+<div className="relative w-full overflow-hidden md:hidden py-4">
+  <motion.div
+    className="flex"
+    animate={{ x: ["0%", "-100%"] }}
+    transition={{
+      ease: "linear",
+      duration: 18, // adjust speed: higher = slower
+      repeat: Infinity,
+    }}
+  >
+    {/* First set */}
+    {logos.map((logo, idx) => (
+      <div
+        key={`set1-${idx}`}
+        className="w-[100px] h-[100px] flex-shrink-0 flex items-center justify-center mx-2"
       >
-        {[
-          "mercedes(1).png",
-          "audi-removebg-preview.png",
-          "bmw-logo.png",
-          "rolls-royce-logo-removebg-preview.png",
-          "jaguar-removebg-preview.png",
-          "lexus-removebg-preview.png",
-          "porsche-Logo.png",
-        ].map((logo, idx) => (
-          <div key={idx} className="w-20 sm:w-24 md:w-28 lg:w-32 flex justify-center">
-            <Image
-              src={`/${logo}`}
-              alt="brand"
-              width={90}
-              height={90}
-              className="grayscale hover:grayscale-0 transition duration-300 object-contain"
-            />
-          </div>
-        ))}
-      </section>
+        <Image
+          src={`/${logo}`}
+          alt={`Brand ${idx}`}
+          width={100}
+          height={100}
+          className="grayscale hover:grayscale-0 transition-all duration-300 object-contain"
+        />
+      </div>
+    ))}
+
+    {/* Duplicate set — required for seamless infinite scroll */}
+    {logos.map((logo, idx) => (
+      <div
+        key={`set2-${idx}`}
+        className="w-[100px] h-[100px] flex-shrink-0 flex items-center justify-center mx-2"
+      >
+        <Image
+          src={`/${logo}`}
+          alt={`Brand duplicate ${idx}`}
+          width={100}
+          height={100}
+          className="grayscale hover:grayscale-0 transition-all duration-300 object-contain"
+        />
+      </div>
+    ))}
+  </motion.div>
+</div>
+
+
+
+        {/* ================= DESKTOP GRID ================= */}
+        <div className="hidden md:flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 lg:gap-20 xl:gap-24">
+          {logos.map((logo, idx) => (
+            <div key={idx} className="w-16 sm:w-20 md:w-24 lg:w-28 flex justify-center">
+              <Image
+                src={`/${logo}`}
+                alt={`Brand logo ${idx + 1}`}
+                width={112}
+                height={112}
+                className="grayscale hover:grayscale-0 transition-all duration-300 object-contain w-full h-auto"
+              />
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
     </>
   );
 }

@@ -19,7 +19,7 @@ export default function Footer() {
           max-w-8xl mx-auto px-6 
           grid grid-cols-1 
           md:grid-cols-2 
-          lg:grid-cols-[2fr_1fr_1fr_1fr] 
+          lg:grid-cols-[2.2fr_1.2fr_.9fr_1fr] 
           gap-12
         "
       >
