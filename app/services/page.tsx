@@ -9,18 +9,23 @@ const servicesData = [
     image: "/ourservices1.jpg",
     desc: "From minor tune-ups to major repairs, our technicians handle all makes and models with precision and care. We ensure your vehicle runs safely and smoothly — no matter the challenge.",
   },
-  {
-    title: "Engine Diagnostics",
+  // {
+  //   title: "Engine Diagnostics",
+  //   image: "/ourservices1.jpg",
+  //   desc: "We use advanced diagnostic tools to quickly identify and resolve engine problems, ensuring your car performs at its best and avoids costly breakdowns.",
+  // },
+    {
+    title: "Tire Sales & Services",
     image: "/ourservices1.jpg",
-    desc: "We use advanced diagnostic tools to quickly identify and resolve engine problems, ensuring your car performs at its best and avoids costly breakdowns.",
+    desc: "Reliable tire sales with professional installation, balancing, and alignment for safe, long-lasting traction.",
   },
   {
-    title: "Brake Service",
-    image: "/ourservices1.jpg",
-    desc: "Your safety is our top priority. We offer expert brake inspections, pad replacements, and fluid checks to ensure confident stopping power every time.",
+    title: "Drive-On Safety & Emission Inspections",
+    image: "/safety.png",
+    desc: "Thorough safety and emission inspections to ensure your vehicle meets regulatory standards and delivers safe, eco-friendly performance on every drive.",
   },
   {
-    title: "Oil Change & Maintenance",
+    title: "Oil Change & Periodic Maintenance",
     image: "/ourservices1.jpg",
     desc: "Keep your engine healthy and efficient with our high-quality oil changes, filter replacements, and routine maintenance services.",
   },

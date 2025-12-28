@@ -10,6 +10,7 @@ import {
   Facebook,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -26,6 +27,7 @@ export default function Footer() {
         {/* ===== Column 1 ===== */}
         <div className="ml-0 md:ml-10 lg:ml-36">
           <div className="flex flex-col items-start space-y-3">
+            <Link href="/">
             <Image
               src="/marvel_png_logo.png"
               alt="Marvel Auto Repair"
@@ -33,6 +35,7 @@ export default function Footer() {
               height={110}
               className="mb-2"
             />
+            </Link>
             <div>
               <h3 className="text-2xl md:text-3xl font-semibold text-white mb-3">
                 Marvel Auto Repair
@@ -49,30 +52,39 @@ export default function Footer() {
             <h4 className="text-lg md:text-xl font-medium text-white mb-2">
               Opening Hours
             </h4>
-            <p className="text-base md:text-lg">Mon - Fri : 08.00 - 2.00</p>
-            <p className="text-base md:text-lg">Sat - Sun : 10.00 - 16.00</p>
+            <p className="text-base md:text-lg">Mon - Fri : 09:00 AM – 05:30 PM</p>
+            <p className="text-base md:text-lg">Saturday : 09:00 AM – 02:00 PM</p>
+            <p className="text-base md:text-lg">Sunday : Closed</p>
+            <p className="text-base md:text-lg">Closed on all Ontario public holidays.</p>
           </div>
         </div>
 
         {/* ===== Column 2 — Reach to Us ===== */}
         <div>
-          <h4 className="text-xl font-medium text-white mb-6">Reach to Us</h4>
+          <h4 className="text-xl font-medium text-white mb-6">Reach Us</h4>
           <ul className="space-y-5 text-gray-400 text-base md:text-lg">
             <li className="flex items-center gap-3">
               <MapPin className="text-white w-5 h-5" />
-              <span>1567, late george Rd</span>
+              <a
+                 href="https://www.google.com/maps/place/Marvel+Auto+Repair/@42.9883723,-81.1737981,17z/data=!4m6!3m5!1s0x882ef3969fee8b81:0xa73d129e96d1c3f5!8m2!3d42.9883723!4d-81.1737981!16s%2Fg%2F11l2d881mg?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                    120 Falcon St #7, London, ON N5W 4Z1
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="text-white w-5 h-5" />
-              <span>+1 234-567-8910</span>
+              <a href="tel:+12266376785">(226) 637-6785</a>
             </li>
             <li className="flex items-center gap-3">
               <Send className="text-white w-5 h-5" />
-              <span>hello@marvel.com</span>
+              <a href="mailto:hello@marvel.com">hello@marvel.com</a>
             </li>
             <li className="flex items-center gap-3">
               <Globe className="text-white w-5 h-5" />
-              <span>www.marvel.com</span>
+              <a href="https://marvelautolondon.ca/" target="_blank" rel="noopener noreferrer">
+                www.marvelautolondon.ca
+              </a>
             </li>
           </ul>
         </div>
@@ -82,35 +94,35 @@ export default function Footer() {
           <h4 className="text-xl font-medium text-white mb-6">Quick Links</h4>
           <ul className="space-y-4 text-gray-400 text-base md:text-lg">
             <li>
-              <a href="#" className="hover:text-yellow-400 transition">
+              <a href="/about" className="hover:text-yellow-400 transition">
                 About Us
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-yellow-400 transition">
+              <a href="/services" className="hover:text-yellow-400 transition">
                 Services
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="#" className="hover:text-yellow-400 transition">
                 Pricing
               </a>
-            </li>
+            </li> */}
             <li>
-              <a href="#" className="hover:text-yellow-400 transition">
+              <a href="/gallery" className="hover:text-yellow-400 transition">
                 Gallery
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-yellow-400 transition">
-                Contact
+              <a href="/contact" className="hover:text-yellow-400 transition">
+                Contact Us
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="#" className="hover:text-yellow-400 transition">
                 Careers
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
 
@@ -120,14 +132,14 @@ export default function Footer() {
             Connect with Us
           </h4>
           <ul className="space-y-5 text-gray-400 text-base md:text-lg">
-            <li className="flex items-center gap-3">
+            {/* <li className="flex items-center gap-3">
               <Youtube className="text-white w-5 h-5" />
               <span>Youtube</span>
             </li>
             <li className="flex items-center gap-3">
               <Twitter className="text-white w-5 h-5" />
               <span>Twitter</span>
-            </li>
+            </li> */}
             <li className="flex items-center gap-3">
               <Instagram className="text-white w-5 h-5" />
               <span>Instagram</span>

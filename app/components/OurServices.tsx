@@ -24,20 +24,20 @@ const services = [
   },
   {
     icon: <Droplets className="w-14 h-14 mx-auto text-black" />,
-    title: "Oil Change & Maintenance",
+    title: "Oil Change & Periodic Maintenance",
     desc: "High-quality oil and filter replacement to keep your car running efficiently and extend engine life.",
     image: "/service4.png",
   },
   {
     icon: <Wrench className="w-14 h-14 mx-auto text-black" />,
-    title: "Brake Service",
+    title: "Drive-On Safety & Emission Inspections",
     desc: "Reliable brake inspections, repairs, and replacements to ensure your safety on the road.",
     image: "/service5.png",
   },
   {
     icon: <Disc className="w-14 h-14 mx-auto text-black" />,
-    title: "Tire Service",
-    desc: "Professional tire installation, balancing, and wheel alignment for maximum grip and durability.",
+    title: "Tire Sales and Service",
+    desc: "Reliable tire sales with professional installation, balancing, and alignment for safe, long-lasting traction.",
     image: "/service6.png",
   },
 ];
@@ -46,7 +46,7 @@ const OurServices: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-black text-center py-20 sm:py-28 px-4 sm:px-8 md:px-12 lg:px-20">
+    <section className="bg-black text-center py-18 sm:py-26 px-4 sm:px-8 md:px-12 lg:px-20">
       {/* ===== Title Section ===== */}
       <h2 className="text-4xl sm:text-5xl font-semibold text-white mb-6 sm:mb-10">
         Our Services
@@ -111,13 +111,13 @@ const OurServices: React.FC = () => {
             />
           </div>
 
-          <div className="bg-yellow-400 py-4 md:py-14 sm:py-5 text-black text-center">
+          <div className="bg-yellow-400 py-6 md:py-16 sm:py-5 text-black text-center">
             <h3 className="text-lg sm:text-xl font-semibold">
               {service.title}
             </h3>
-            <p className="text-sm sm:text-base mt-1 font-medium">
+            {/* <p className="text-sm sm:text-base mt-1 font-medium">
               Learn More
-            </p>
+            </p> */}
           </div>
         </motion.div>
       )}

@@ -28,9 +28,9 @@ export default function TestimonialsAndContact() {
 
   return (
     <section className="w-full bg-black text-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-20 md:py-28">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-18 md:py-26">
         {/* Heading */}
-        <h2 className="text-3xl md:text-5xl font-semibold mb-8 md:mb-10 text-left text-gray-300">
+        <h2 className="text-3xl md:text-5xl font-semibold mb-8 md:mb-10 text-gray-300 text-center">
           What Our Customers Say
         </h2>
 

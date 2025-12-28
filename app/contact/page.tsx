@@ -2,6 +2,8 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { MapPin, Phone, Mail, Globe, Clock, Plus } from "lucide-react";
+import toast from "react-hot-toast";
+
 
 const servicesList = [
   "General Auto Repair",
@@ -24,46 +26,151 @@ export default function ServicesPage() {
     message: "",
   });
 
+  const [errors, setErrors] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  subject: "",
+  message: "",
+});
+
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^\d{10}$/;
+
+const validateField = (name: string, value: string) => {
+  let error = "";
+
+  switch (name) {
+    case "name":
+      if (!value.trim()) error = "!Name is required";
+      break;
+
+    case "email":
+      if (!value.trim()) error = "!Email is required";
+      else if (!emailRegex.test(value))
+        error = "!Please enter a valid email address";
+      break;
+
+    case "phone":
+      if (!phoneRegex.test(value))
+        error = "!Please enter a valid 10-digit phone number";
+      break;
+
+    case "subject":
+      if (!value.trim()) error = "!Subject is required";
+      break;
+
+    case "message":
+      if (!value.trim()) error = "!Message is required";
+      break;
+  }
+
+  setErrors((prev) => ({ ...prev, [name]: error }));
+};
+
+
   // input handler
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) => {
+  const { name, value } = e.target;
+
+  // Allow only numbers for phone
+  const newValue =
+    name === "phone" ? value.replace(/\D/g, "") : value;
+
+  setFormData({ ...formData, [name]: newValue });
+  validateField(name, newValue);
+};
+
+
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const newErrors = {
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   };
 
-  // submit handler
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  let hasError = false;
 
-    const body = new FormData();
-    body.append("name", formData.name);
-    body.append("email", formData.email);
-    body.append("phone", formData.phone);
-    body.append("subject", formData.subject);
-    body.append("message", formData.message);
+  if (!formData.name.trim()) {
+    newErrors.name = "Name is required";
+    hasError = true;
+  }
 
-    if (file) {
-      body.append("file", file);
-    }
+  if (!emailRegex.test(formData.email)) {
+    newErrors.email = "Please enter a valid email address";
+    hasError = true;
+  }
 
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      body,
+  if (!phoneRegex.test(formData.phone)) {
+    newErrors.phone = "Please enter a valid 10-digit phone number";
+    hasError = true;
+  }
+
+    if (!formData.subject.trim()) {
+    newErrors.subject = "Subject is required";
+    hasError = true;
+  }
+
+  if (!formData.message.trim()) {
+    newErrors.message = "Message is required";
+    hasError = true;
+  }
+
+  // Stop submit if validation fails
+  if (hasError) {
+    setErrors(newErrors);
+    return;
+  }
+
+  setErrors(newErrors);
+
+  const body = new FormData();
+  body.append("name", formData.name);
+  body.append("email", formData.email);
+  body.append("phone", formData.phone);
+  body.append("subject", formData.subject);
+  body.append("message", formData.message);
+
+  if (file) {
+    body.append("file", file);
+  }
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    body,
+  });
+
+  const data = await res.json();
+  if (data.success) {
+    toast.success("Message sent successfully!");
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
     });
+    setFile(null);
+    setErrors({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+    });
+  } else {
+    toast.error("Failed to send message. Please try again.");
+  }
+};
 
-    const data = await res.json();
-    if (data.success) {
-      alert("Message sent!");
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-      });
-      setFile(null);
-    } else {
-      alert("Failed to send message");
-    }
-  };
 
   return (
     <main className="bg-black text-white min-h-screen">
@@ -86,7 +193,7 @@ export default function ServicesPage() {
             </h2>
 
             <p className="text-sm sm:text-base md:text-lg text-gray-300">
-              Have a question or need a service estimate? Fill out the form below and our team will get back to you shortly.
+              Have a question or need more information? Fill out the form below, and our team will get back to you shortly.
             </p>
           </div>
         </div>
@@ -103,45 +210,84 @@ export default function ServicesPage() {
             <form className="space-y-8" onSubmit={handleSubmit}>
               
               {/* Name */}
-              <div>
-                <label className="block text-sm mb-2 text-gray-300">Your Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
-                />
-              </div>
+<div>
+  <label className="block text-sm mb-2 text-gray-300">
+    Your Name <span className="text-red-500">*</span>
+  </label>
+  <input
+    type="text"
+    name="name"
+    value={formData.name}
+    onChange={handleChange}
+    className={`w-full border rounded-md px-4 py-2 bg-transparent focus:outline-none ${
+      errors.name ? "border-red-500" : "border-gray-500 focus:border-yellow-400"
+    }`}
+  />
+  {errors.name && (
+    <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+  )}
+</div>
 
-              {/* Email + Phone */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm mb-2 text-gray-300">Your Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm mb-2 text-gray-300">Phone Number</label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
-                  />
-                </div>
-              </div>
+<div>
+  <label className="block text-sm mb-2 text-gray-300">
+    Your Phone <span className="text-red-500">*</span>
+  </label>
+  <input
+    type="text"
+    name="phone"
+    value={formData.phone}
+    onChange={handleChange}
+    className={`w-full border rounded-md px-4 py-2 bg-transparent focus:outline-none ${
+      errors.phone ? "border-red-500" : "border-gray-500 focus:border-yellow-400"
+    }`}
+  />
+  {errors.phone && (
+    <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+  )}
+</div>
+
+  {/* <label className="block text-sm text-gray-300">
+      Your Phone <span className="text-red-500">*</span>
+  </label>
+  <input
+  type="text"
+  name="phone"
+  value={formData.phone}
+  onChange={handleChange}
+  maxLength={10}
+  className={`w-full border rounded-md px-4 py-2 bg-transparent focus:outline-none ${
+    errors.phone ? "border-red-500" : "border-gray-500 focus:border-yellow-400"
+  }`}
+  />
+  {errors.phone && (
+  <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+  )} */}
+
+
+{/* Email + Phone */}
+<div>
+  <label className="block text-sm mb-2 text-gray-300">
+    Your Email
+  </label>
+  <input
+    type="email"
+    name="email"
+    value={formData.email}
+    onChange={handleChange}
+    className={`w-full border rounded-md px-4 py-2 bg-transparent focus:outline-none ${
+      errors.email ? "border-red-500" : "border-gray-500 focus:border-yellow-400"
+    }`}
+  />
+  {errors.email && (
+    <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+  )}
+</div>
+
 
               {/* Subject + Message */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm mb-2 text-gray-300">Subject</label>
+                  <label className="block text-sm mb-2 text-gray-300">Subject<span className="text-red-500"> *</span></label>
                   <input
                     type="text"
                     name="subject"
@@ -149,9 +295,11 @@ export default function ServicesPage() {
                     onChange={handleChange}
                     className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
                   />
+                  {errors.subject && (<p className="text-sm text-red-500 mt-1">{errors.subject}</p>)}
                 </div>
+                
                 <div>
-                  <label className="block text-sm mb-2 text-gray-300">Write your enquiry</label>
+                  <label className="block text-sm mb-2 text-gray-300">Write your enquiry<span className="text-red-500"> *</span></label>
                   <textarea
                     rows={3}
                     name="message"
@@ -159,6 +307,7 @@ export default function ServicesPage() {
                     onChange={handleChange}
                     className="w-full border border-gray-500 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:border-yellow-400"
                   ></textarea>
+                  {errors.message && ( <p className="text-sm text-red-500 mt-1">{errors.message}</p> )}
                 </div>
               </div>
 
@@ -193,21 +342,26 @@ export default function ServicesPage() {
               <h3 className="text-xl font-semibold mb-4">Connect Us</h3>
               <div className="space-y-5 text-gray-300 text-sm">
                 <p className="flex items-center gap-3 border-b border-gray-700 pb-2">
-                  <MapPin size={18} /> 1567, late george Rd
+                  <MapPin size={18} /><a
+                 href="https://www.google.com/maps/place/Marvel+Auto+Repair/@42.9883723,-81.1737981,17z/data=!4m6!3m5!1s0x882ef3969fee8b81:0xa73d129e96d1c3f5!8m2!3d42.9883723!4d-81.1737981!16s%2Fg%2F11l2d881mg?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                    120 Falcon St #7, London, ON N5W 4Z1
+              </a>
                 </p>
                 <p className="flex items-center gap-3 border-b border-gray-700 pb-2">
-                  <Phone size={18} /> +1 234-567-8910
+                  <Phone size={18} /> <a href="tel:+12266376785">(226) 637-6785</a>
                 </p>
                 <p className="flex items-center gap-3 border-b border-gray-700 pb-2">
-                  <Mail size={18} /> hello@marvel.com
+                  <Mail size={18} /> <a href="mailto:hello@marvel.com">hello@marvel.com</a>
                 </p>
                 <p className="flex items-center gap-3 border-b border-gray-700 pb-2">
-                  <Globe size={18} /> www.marvel.com
+                  <Globe size={18} /> <a href="https://marvelautolondon.ca/" target="_blank" rel="noopener noreferrer">www.marvelautolondon.ca</a>
                 </p>
                 <p className="flex items-start gap-3">
                   <Clock size={18} />
                   <span>
-                    Mon - Fri : 08.00 - 2.00 <br /> Sat - Sun : 10.00 - 16.00
+                    Mon - Fri : 09:00 AM – 05:30 PM <br /> Saturday : 09:00 AM – 02:00 PM <br /> Sunday : Closed <br /> Closed on all Ontario public holidays.
                   </span>
                 </p>
               </div>

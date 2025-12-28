@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Wrench, Gauge, Cog, DollarSign, Users, Clock } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -59,17 +60,14 @@ export default function AboutPage() {
   {/* PARAGRAPHS BELOW THE BOX */}
   <div className="absolute bottom-24 sm:bottom-32 md:bottom-40 lg:bottom-40 left-1/2 -translate-x-1/2 w-full px-4 sm:px-10 md:px-20 max-w-6xl text-center">
     <p className="text-gray-200 text-md sm:text-sm md:text-xl leading-relaxed mb-3">
-      At Marvel Auto Repair, we believe your vehicle deserves expert care and
-      attention. With a team of skilled technicians and state-of-the-art
-      equipment, we provide reliable repairs, regular maintenance, and auto
-      care solutions for all makes and models.
+      At Marvel Auto Repair, we believe your vehicle deserves expert care and attention. Our team of skilled technicians, 
+      supported by state-of-the-art equipment, provides reliable repairs, regular maintenance, and comprehensive auto care 
+      solutions for all makes and models.
     </p>
 
     <p className="text-gray-200 text-md sm:text-sm md:text-xl leading-relaxed">
-      Our mission is simple: to deliver honest, transparent, and high-quality
-      service that keeps you safe on the road and gives you peace of mind.
-      Whether it’s a routine oil change or a complex repair, we treat every car
-      as if it were our own.
+     Our mission is simple: to deliver honest, transparent, and high-quality service that keeps you safe on the road and 
+     gives you peace of mind. From routine oil changes to complex repairs, we treat every vehicle as if it were our own.
     </p>
   </div>
 </section>
@@ -206,9 +204,12 @@ export default function AboutPage() {
         </div>
 
         {/* BUTTON RIGHT */}
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-10 py-5 rounded-full transition">
+        <Link href="/contact">
+        <button 
+        className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-10 py-5 rounded-full transition">
           Contact Us
         </button>
+        </Link>
 
       </div>
     </div>

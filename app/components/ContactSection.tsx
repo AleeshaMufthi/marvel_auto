@@ -21,36 +21,59 @@ export default function ContactSection() {
           <div>
             <div className="flex items-center gap-3 mb-2 text-xl">
               <MapPin className="text-white w-8 h-8 mr-8" />
-              <p className="relative inline-block pb-6">1567, late george Rd
-              <span className="block border-b-2 border-gray-400 w-52 mt-6"></span>
-              </p>
+              {/* <p className="relative inline-block pb-6">120 Falcon St #7,<br></br> London, ON N5W 4Z1 */}
+              <a className="relative inline-block pb-6 cursor-pointer"
+                 href="https://www.google.com/maps/place/Marvel+Auto+Repair/@42.9883723,-81.1737981,17z/data=!4m6!3m5!1s0x882ef3969fee8b81:0xa73d129e96d1c3f5!8m2!3d42.9883723!4d-81.1737981!16s%2Fg%2F11l2d881mg?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                    120 Falcon St #7,<br />
+                    London, ON N5W 4Z1
+                <span className="block border-b-2 border-gray-400 w-52 mt-6"></span>
+              </a>
+              {/* </p> */}
             </div>
           </div>
 
           <div>
             <div className="flex items-center gap-3 mb-2 text-xl">
               <Phone className="text-white w-8 h-8 mr-8" />
-              <p className="relative inline-block pb-6">+1 234-567-8910
-              <span className="block border-b-2 border-gray-400 w-52 mt-6"></span>
-              </p>
+              {/* <p className="relative inline-block pb-6"> */}
+              <a className="relative inline-block pb-6 cursor-pointer"
+                 href="tel:+12266376785">
+                 (226) 637-6785
+                 <span className="block border-b-2 border-gray-400 w-48 mt-6"></span>
+              </a>
+               
+              
+              {/* </p> */}
             </div>
           </div>
 
           <div>
             <div className="flex items-center gap-3 mb-2 text-xl">
               <Mail className="text-white w-8 h-8 mr-8" />
-              <p className="relative inline-block pb-6">hello@marvel.com
+              {/* <p className="relative inline-block pb-6"> */}
+              <a className="relative inline-block pb-6 cursor-pointer"
+                 href="mailto:hello@marvel.com">
+                 hello@marvel.com
               <span className="block border-b-2 border-gray-400 w-52 mt-6"></span>
-              </p>
+              </a>
+              {/* </p> */}
             </div>
           </div>
 
           <div>
             <div className="flex items-center gap-3 mb-2 text-xl">
               <Globe className="text-white w-8 h-8 mr-8" />
-              <p className="relative inline-block pb-6">www.marvel.com
-              <span className="block border-b-2 border-gray-400 w-52 mt-6"></span>
-              </p>
+              {/* <p className="relative inline-block pb-6"> */}
+              <a className="relative inline-block pb-6 cursor-pointer"
+                  href="https://marvelautolondon.ca/"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                www.marvelautolondon.ca
+              <span className="block border-b-2 border-gray-400 w-68 mt-6"></span>
+              </a>
+              {/* </p> */}
             </div>
           </div>
 
@@ -58,8 +81,10 @@ export default function ContactSection() {
           <div className="flex items-start gap-3 mb-2 text-xl">
             <Clock className="text-White w-8 h-8 mr-8" />
             <div className="flex flex-col">
-            <p>Mon - Fri : 08.00 - 2.00</p>
-            <p className="mt-3">Sat - Sun : 10.00 - 16.00</p>
+            <p>Mon - Fri : 09:00 AM – 05:30 PM</p>
+            <p className="mt-3">Saturday : 09:00 AM – 02:00 PM</p>
+            <p className="mt-3">Sunday : Closed</p>
+            <p className="mt-3">Closed on all Ontario public holidays.</p>
             </div>
           </div>
         </div>
